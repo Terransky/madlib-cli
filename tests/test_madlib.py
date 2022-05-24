@@ -1,9 +1,11 @@
 import pytest
 from madlib_cli.madlib import read_template, parse_template, merge
 
+test_path = '../assets/dark_and_stormy_night_template.txt'
+true_path = '../assets/make_me_a_video_game_template.txt'
 
 def test_read_template_returns_stripped_string():
-    actual = read_template("assets/dark_and_stormy_night_template.txt")
+    actual = read_template(true_path)
     expected = "It was a {Adjective} and {Adjective} {Noun}."
     assert actual == expected
 
@@ -14,7 +16,7 @@ def test_parse_template():
         "It was a {Adjective} and {Adjective} {Noun}."
     )
     expected_stripped = "It was a {} and {} {}."
-    expected_parts = ("Adjective", "Adjective", "Noun")
+    expected_parts = ["Adjective", "Adjective", "Noun"]
 
     assert actual_stripped == expected_stripped
     assert actual_parts == expected_parts

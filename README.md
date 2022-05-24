@@ -1,4 +1,4 @@
-# LAB - Class 
+# LAB - Class 03
 ## Project: Errors, Files, and Packaging
 ### Author: Anthony Turinski
 ### Links and Resources
