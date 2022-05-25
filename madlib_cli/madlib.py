@@ -4,9 +4,13 @@ true_path = '../assets/make_me_a_video_game_template.txt'
 new_path = '../assets/user_madlibs.txt'
 
 print(f"""
-Welcome, user.
-Madlibs is a thing I'll explain in a future commit.
-Use the following commands to play:
+Welcome, User.
+Madlibs is a fun word where you are asked to input words of a specific word class such as an adjective or noun.
+Once you've finished entering the requisite terms, a whimsical story will be presented back to you filled with
+your custom input.
+
+Please check the prompt and enter the corresponding word type.
+
 """)
 
 
@@ -32,8 +36,9 @@ def parse_template(txt):
 
             while txt[counter] != "}":
                 counter += 1
-                stripped_char += txt[counter]
-        elif txt[counter] == "}":
+                stripped_char += txt[counter]  # stores string without curlies
+
+        elif txt[counter] == "}":  # search for ending }
             stripped = stripped.replace(stripped_char, "{}", 1)  # searches for word class, replaces with {} once
             temp_list.append(stripped_char)
             stripped_char = ""
@@ -50,7 +55,7 @@ def parse_template(txt):
 
 
 def user_input(parts):
-    """docstring"""
+    """shows user word type, asks for input and store/return the list"""
     user_list = []
     for i in parts:
         user_list.append(input(f"Dear User, please input a {i}.\n > "))
@@ -58,9 +63,9 @@ def user_input(parts):
     return user_list
 
 
-def merge(parsed, user_input):
-    """"docstring"""
-    user_list = user_input
+def merge(parsed, input_list):
+    """takes the template string with empty {}, fills with values from user list, writes to file"""
+    user_list = input_list
     parsed_template = parsed
 
     for i in user_list:
@@ -75,6 +80,9 @@ if __name__ == "__main__":
     parsed_template = parse_template(results)
     users_input = user_input(parsed_template[1])
     merged_madlib = merge(parsed_template[0], users_input)
+
     print(merged_madlib)
 
+    with open(new_path, "w") as file:
+        file.write(merged_madlib)
 
