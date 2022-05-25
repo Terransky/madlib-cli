@@ -9,9 +9,6 @@ Madlibs is a thing I'll explain in a future commit.
 Use the following commands to play:
 """)
 
-global parts_list
-parts_list = []
-
 
 def read_template(template):
     """"This opens a text file and returns the contents as a list"""
@@ -25,6 +22,7 @@ def parse_template(txt):
     stripped = txt  # original string from read_template()
     stripped_char = ""
     temp_list = []
+    parts_list = []
     counter = 0
 
     for counter in range(len(txt)):
@@ -42,13 +40,13 @@ def parse_template(txt):
 
     for i in temp_list:
         word_class = ""
-        try:
-            for j in range(1, len(i)-1):
-                word_class += i[j]  # concatenates letters of word class to rebuild string without {}
-        finally:
-            parts_list.append(word_class)  # and saves them to this list for later reference
 
-    return stripped  # returns string with empty {} curly braces to fill
+        for j in range(1, len(i)-1):
+            word_class += i[j]  # concatenates letters of word class to rebuild string without {}
+
+        parts_list.append(word_class)  # and saves them to this list for later reference
+
+    return stripped, parts_list  # returns string with empty {} curly braces to fill and parts list
 
 
 def user_input(parts):
@@ -71,10 +69,12 @@ def merge(parsed, user_input):
     return parsed_template
 
 
-results = read_template(true_path)
-parsed_template = parse_template(results)
+if __name__ == "__main__":
 
-users_input = user_input(parts_list)
-merged_madlib = merge(parsed_template, users_input)
+    results = read_template(true_path)
+    parsed_template = parse_template(results)
+    users_input = user_input(parsed_template[1])
+    merged_madlib = merge(parsed_template[0], users_input)
+    print(merged_madlib)
 
-print(merged_madlib)
+
